@@ -1,11 +1,25 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
+import ReCAPTCHA from "react-google-recaptcha";
 
 const Home = () => {
   const [showResults, setShowResults] = useState(false);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [score, setScore] = useState(0);
+  const [captchaValue, setCaptchaValue] = useState(null); // Add this line
+
+  const onChange = (value) => {
+    setCaptchaValue(value);
+  };
 
   const questions = [
+    {
+      text: "What is your gender?",
+      options: [
+        { id: 0, text1: "Man", isCorrect: false },
+        { id: 1, text2: "Women", isCorrect: false },
+      ],
+    },
     {
       text: "How old are you?",
       options: [
@@ -84,7 +98,7 @@ const Home = () => {
     <div className="lg:px-32 px-10 text-white">
       <div className="flex text-center mx-auto justify-center mt-10 gap-4 items-center">
         <img
-          className="w-7 h-fit text-white bg-slate-100 rounded p-[1px]"
+          className="w-7 h-7 text-white bg-slate-100 rounded p-[1px]"
           src="/icon.jpeg"
           alt=""
         />
@@ -109,32 +123,50 @@ const Home = () => {
         {showResults ? (
           /* 4. Final Results */
 
-          <div className="bg-[#322f2f] md:p-10 p-4">
-            <h1 className="text-2xl font-bold uppercase">Thank You</h1>
-            <h2>
-              Your Test Result:
-              <span className="text-red-600 uppercase"> Excellent</span> (100
-              out of 92)
-            </h2>
-            <p className="mt-3">
-              You are an ideal person for making money online,
-            </p>
-            <p>
-              You may have a chance to earn more than
-              <span className="text-red-600">$5,000</span> daily!
-            </p>
-            <p>
-              We have selected for you{" "}
-              <span className="text-red-600">4 offers</span> for fast online
-              money making.
-            </p>
-            <p>
-              Click the <span className="text-red-600">GET OFFER</span> button
-              to go to the best offer immediately!
-            </p>
-            <button className="bg-[#ffba5e] md:px-32 md:py-4 rounded md:text-xl uppercase mt-3 text-black py-3 px-7">
-              Get Offer
-            </button>
+          <div className="bg-[#322f2f] md:p-10 p-7">
+            {captchaValue ? (
+              <div>
+                <h1 className="text-2xl font-bold uppercase">Thank You</h1>
+                <h2>
+                  Your Test Result:
+                  <span className="text-red-600 uppercase">
+                    {" "}
+                    Excellent
+                  </span>{" "}
+                  (100 out of 92)
+                </h2>
+                <p className="mt-3">
+                  You are an ideal person for making money online,
+                </p>
+                <p>
+                  You may have a chance to earn more than
+                  <span className="text-red-600">$5,000</span> daily!
+                </p>
+                <p>
+                  We have selected for you{" "}
+                  <span className="text-red-600">4 offers</span> for fast online
+                  money making.
+                </p>
+                <p className="mb-6">
+                  Click the <span className="text-red-600">GET OFFER</span>{" "}
+                  button to go to the best offer immediately!
+                </p>
+                <Link
+                  to="https://www.facebook.com/erakibul/"
+                  className="bg-[#ffba5e] md:px-32 md:py-4 rounded md:text-xl uppercase text-black py-3 px-7"
+                >
+                  {" "}
+                  Get Offer
+                </Link>
+              </div>
+            ) : (
+              <div className="mb-3 flex justify-center">
+                <ReCAPTCHA
+                  sitekey="6LelPTApAAAAADWVe8dSbkcjltECOr38kOEygA9u"
+                  onChange={onChange}
+                />
+              </div>
+            )}
           </div>
         ) : (
           /*Question Card*/
@@ -158,7 +190,7 @@ const Home = () => {
                   .map((option) => (
                     <li
                       key={option.id}
-                      className="bg-[#ffba5e] hover:bg-[#e49328] cursor-pointer p-2 rounded mt-3 md:mt-0"
+                      className="bg-[#ffba5e] hover:bg-[#e49328] cursor-pointer p-[5px] rounded mt-3 md:mt-0"
                       onClick={() => optionClicked(option.isCorrect)}
                     >
                       {option.text1 || option.text2}
@@ -169,7 +201,7 @@ const Home = () => {
                 {questions[currentQuestion].options.slice(2).map((option) => (
                   <li
                     key={option.id}
-                    className="bg-[#ffba5e] hover:bg-[#e49328] cursor-pointer p-2 rounded mt-3 md:mt-0"
+                    className="bg-[#ffba5e] hover:bg-[#e49328] cursor-pointer p-[5px] rounded mt-3 md:mt-0"
                     onClick={() => optionClicked(option.isCorrect)}
                   >
                     {option.text1 || option.text2}
@@ -201,8 +233,8 @@ const Home = () => {
               </div>
               <p className="flex gap-3 text-sm mt-1">
                 <span>like</span>
-                <span> 20k </span>
-                <span>1hrs</span>
+                <span>56k </span>
+                <span>17hrs</span>
               </p>
             </div>
           </div>
@@ -223,8 +255,8 @@ const Home = () => {
               </div>
               <p className="flex gap-3 text-sm mt-1">
                 <span>like</span>
-                <span> 20k </span>
-                <span>1hrs</span>
+                <span>40k </span>
+                <span>15hrs</span>
               </p>
             </div>
           </div>
@@ -246,13 +278,13 @@ const Home = () => {
               </div>
               <p className="flex gap-3 text-sm mt-1">
                 <span>like</span>
-                <span> 20k </span>
-                <span>1hrs</span>
+                <span>38k </span>
+                <span>14hrs</span>
               </p>
             </div>
           </div>
 
-          <div className="flex gap-2 mt-3 ml-16">
+          <div className="flex gap-2 mt-3 ml-14">
             <div className=" ">
               <img
                 className="w-14 h-13 rounded"
@@ -268,8 +300,8 @@ const Home = () => {
               </div>
               <p className="flex gap-3 text-sm mt-1">
                 <span>like</span>
-                <span> 20k </span>
-                <span>1hrs</span>
+                <span>32k </span>
+                <span>5hrs</span>
               </p>
             </div>
           </div>
@@ -290,8 +322,8 @@ const Home = () => {
               </div>
               <p className="flex gap-3 text-sm mt-1">
                 <span>like</span>
-                <span> 20k </span>
-                <span>1hrs</span>
+                <span> 30k </span>
+                <span>12hrs</span>
               </p>
             </div>
           </div>
@@ -311,8 +343,8 @@ const Home = () => {
               </div>
               <p className="flex gap-3 text-sm mt-1">
                 <span>like</span>
-                <span> 20k </span>
-                <span>1hrs</span>
+                <span> 26k </span>
+                <span>10hrs</span>
               </p>
             </div>
           </div>
@@ -332,8 +364,8 @@ const Home = () => {
               </div>
               <p className="flex gap-3 text-sm mt-1">
                 <span>like</span>
-                <span> 20k </span>
-                <span>1hrs</span>
+                <span> 22k </span>
+                <span>9hrs</span>
               </p>
             </div>
           </div>
@@ -353,13 +385,13 @@ const Home = () => {
               </div>
               <p className="flex gap-3 text-sm mt-1">
                 <span>like</span>
-                <span> 20k </span>
-                <span>1hrs</span>
+                <span> 16k </span>
+                <span>7hrs</span>
               </p>
             </div>
           </div>
 
-          <div className="flex gap-2 mt-3 ml-16">
+          <div className="flex gap-2 mt-3 ml-14">
             <div>
               <img
                 className="w-14 h-13 rounded"
@@ -369,19 +401,19 @@ const Home = () => {
             </div>
 
             <div className="w-full ">
-              <div className="bg-[#474747] rounded-lg p-3 ">
+              <div className="bg-[#474747] rounded-lg p-3">
                 <h1 className="font-bold">Jameson Bennett</h1>
                 <p className="text-sm">I just missed 100 for 3 point.</p>
               </div>
               <p className="flex gap-3 text-sm mt-1">
                 <span>like</span>
-                <span> 20k </span>
-                <span>1hrs</span>
+                <span> 12k </span>
+                <span>5hrs</span>
               </p>
             </div>
           </div>
 
-          <div className="flex gap-2 mt-3 ml-32">
+          <div className="flex gap-2 mt-3 ml-24">
             <div className=" ">
               <img
                 className="w-14 h-13 rounded"
@@ -397,8 +429,8 @@ const Home = () => {
               </div>
               <p className="flex gap-3 text-sm mt-1">
                 <span>like</span>
-                <span> 20k </span>
-                <span>1hrs</span>
+                <span> 3k </span>
+                <span>3hrs</span>
               </p>
             </div>
           </div>
@@ -418,8 +450,8 @@ const Home = () => {
               </div>
               <p className="flex gap-3 text-sm mt-1">
                 <span>like</span>
-                <span> 20k </span>
-                <span>1hrs</span>
+                <span>3k </span>
+                <span>30 minute</span>
               </p>
             </div>
           </div>
@@ -439,8 +471,8 @@ const Home = () => {
               </div>
               <p className="flex gap-3 text-sm mt-1">
                 <span>like</span>
-                <span> 20k </span>
-                <span>1hrs</span>
+                <span> 1k </span>
+                <span>6 minute</span>
               </p>
             </div>
           </div>
