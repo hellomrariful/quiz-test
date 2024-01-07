@@ -6,7 +6,7 @@ const Home = () => {
   const [showResults, setShowResults] = useState(false);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [score, setScore] = useState(0);
-  const [captchaValue, setCaptchaValue] = useState(null); // Add this line
+  const [captchaValue, setCaptchaValue] = useState(null);
 
   const onChange = (value) => {
     setCaptchaValue(value);
@@ -73,16 +73,14 @@ const Home = () => {
         { id: 2, text2: "Yes, I am a beginner", isCorrect: false },
         {
           id: 3,
-          text2: "Yes, I have professionally experience",
+          text2: "Yes, I have experience",
           isCorrect: true,
         },
       ],
     },
   ];
 
-  /* A possible answer was clicked */
   const optionClicked = (isCorrect) => {
-    // Increment the score
     if (isCorrect) {
       setScore(score + 1);
     }
@@ -119,20 +117,14 @@ const Home = () => {
       </div>
 
       <div className="text-center md:mt-10 mt-7 text-white">
-        {/* 3. Show results or show the question game  */}
         {showResults ? (
-          /* 4. Final Results */
-
           <div className="bg-[#322f2f] md:p-10 p-7">
             {captchaValue ? (
               <div>
                 <h1 className="text-2xl font-bold uppercase">Thank You</h1>
                 <h2>
                   Your Test Result:
-                  <span className="text-red-600 uppercase">
-                    {" "}
-                    Excellent
-                  </span>{" "}
+                  <span className="text-red-600 uppercase">Excellent</span>
                   (100 out of 92)
                 </h2>
                 <p className="mt-3">
@@ -143,22 +135,18 @@ const Home = () => {
                   <span className="text-red-600">$5,000</span> daily!
                 </p>
                 <p>
-                  We have selected for you{" "}
-                  <span className="text-red-600">4 offers</span> for fast online
-                  money making.
-                </p>
+                  We have selected for you <span className="text-red-600">4 offers</span> for fast online
+                  money making.</p>
                 <p className="mb-6">
-                  Click the <span className="text-red-600">GET OFFER</span>{" "}
+                  Click the <span className="text-red-600">GET OFFER</span>
                   button to go to the best offer immediately!
                 </p>
                 <Link
                   to="https://www.facebook.com/erakibul/"
                   className="bg-[#ffba5e] md:px-32 md:py-4 rounded md:text-xl uppercase text-black py-3 px-7"
-                >
-                  {" "}
-                  Get Offer
-                </Link>
+                >Get Offer</Link>
               </div>
+              
             ) : (
               <div className="mb-3 flex justify-center">
                 <ReCAPTCHA
@@ -169,9 +157,8 @@ const Home = () => {
             )}
           </div>
         ) : (
-          /*Question Card*/
+          // Question Card
           <div>
-            {/* Current Question  */}
             <div className="flex mx-auto text-center justify-center items-center gap-1">
               <h3 className="md:text-2xl text-xl font-bold">
                 {questions[currentQuestion].text}
@@ -180,11 +167,8 @@ const Home = () => {
                 ({currentQuestion + 1} out of {questions.length})
               </h2>
             </div>
-
-            {/* List of possible answers  */}
             <ul className="mt-2 md:mx-36 text-xl text-black">
               <div className="md:grid grid-cols-2 gap-5">
-                {/* First option on the left side */}
                 {questions[currentQuestion].options
                   .slice(0, 2)
                   .map((option) => (
@@ -196,8 +180,6 @@ const Home = () => {
                       {option.text1 || option.text2}
                     </li>
                   ))}
-
-                {/* Last two options on the right side */}
                 {questions[currentQuestion].options.slice(2).map((option) => (
                   <li
                     key={option.id}
@@ -481,7 +463,7 @@ const Home = () => {
 
       <div className="text-center mx-auto text-sm mb-5 mt-5">
         <div className="">
-          <span>Affiliate Program</span> | <span>Privacy Policy</span> |{" "}
+          <span>Affiliate Program</span> | <span>Privacy Policy</span> |
           <span>Cookie Policy</span>
         </div>
         &#169; 2024
